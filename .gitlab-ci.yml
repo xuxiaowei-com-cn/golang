@@ -4,6 +4,8 @@ stages:
 docker-build:
   stage: docker-build
   image: docker:24.0.6
+  variables:
+    DOCKER_TLS_CERTDIR: ""
   services:
     - docker:24.0.6-dind
   before_script:
