@@ -6,8 +6,10 @@ docker-build:
   image: docker:24.0.6
   variables:
     DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375
   services:
-    - docker:24.0.6-dind
+    - name: docker:24.0.6-dind
+      alias: docker
   before_script:
     - set +e
     - start_time=$(date +%s)
