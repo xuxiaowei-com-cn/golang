@@ -45,8 +45,11 @@ docker-build:
     - TAG=1.21-alpine3.18-build-base
     - docker build -t $DOCKER_USERNAME/$NAME:$TAG . --no-cache --progress plain
     - docker images
-    - docker tag $CI_REGISTRY_IMAGE/$NAME:$TAG $CI_REGISTRY_IMAGE/$NAME:$TAG-$CI_PIPELINE_ID
-    - docker push "$DOCKER_USERNAME/$NAME:$TAG"
+    - docker tag $DOCKER_USERNAME/$NAME:$TAG $CI_REGISTRY_IMAGE/$NAME:$TAG
+    - docker tag $DOCKER_USERNAME/$NAME:$TAG $CI_REGISTRY_IMAGE/$NAME:$TAG-$CI_PIPELINE_ID
+    - docker push $DOCKER_USERNAME/$NAME:$TAG
+    - docker push $CI_REGISTRY_IMAGE/$NAME:$TAG
+    - docker push $CI_REGISTRY_IMAGE/$NAME:$TAG-$CI_PIPELINE_ID
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
 #  rules:
 #    - if: $CI_COMMIT_TAG
