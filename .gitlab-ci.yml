@@ -7,6 +7,30 @@ docker-build:
   services:
     - docker:24.0.6-dind
   before_script:
+    - set +e
+    - start_time=$(date +%s)
+    - elapsed=0
+    - interval=5
+    - timeout=60
+    - |
+      while true; do
+        docker info >/dev/null 2>&1
+        result=$?
+        current_time=$(date +%s)
+        elapsed_time=$((current_time - start_time))
+        if [[ $result -eq 0 ]]; then
+          echo "docker 完成启动"
+          break
+        fi
+        if [[ elapsed_time -gt $timeout ]]; then
+          echo "docker 启动超时"
+          exit 1
+        fi
+        echo "docker 正在启动($elapsed) ..."
+        elapsed=$((elapsed+interval))
+        sleep $interval
+      done
+    - set -e
     - docker info
     - docker images
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
