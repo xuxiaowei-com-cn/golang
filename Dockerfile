@@ -4,4 +4,4 @@ FROM golang:1.21-alpine3.18
 # 维护人员
 MAINTAINER 徐晓伟 xuxiaowei@xuxiaowei.com.cn
 
-RUN apk update && apk add --no-cache git
+RUN apk update && apk add --no-cache git build-base
